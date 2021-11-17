@@ -2,11 +2,18 @@
 
 ## Building
 
-`pack build vue-sample --buildpack gcr.io/paketo-buildpacks/nodejs --env "BP_NODE_RUN_SCRIPTS=build" --env "NODE_ENV=development"`
+```
+pack build vue-sample --buildpack gcr.io/paketo-buildpacks/nodejs \
+                      --buildpack "https://github.com/ForestEckhardt/source-removal/releases/download/v0.0.7/source-removal-v0.0.7.tgz" \
+                      --buildpack gcr.io/paketo-buildpacks/nginx \
+                      --env "BP_NODE_RUN_SCRIPTS=build" \
+                      --env "NODE_ENV=development" \
+                      --env "BP_INCLUDE_FILES=nginx.conf:public/*"
+```
 
 ## Running
 
-`docker run --interactive --tty --init --publish 8080:8080 vue-sample`
+`docker run --interactive --tty --init --publish 8080:8080 --env PORT=8080 vue-sample`
 
 ## Viewing
 
